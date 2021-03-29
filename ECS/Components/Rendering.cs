@@ -5,8 +5,9 @@ namespace Monogame1.ECS.Components
 {
     public class Rendering : Component
     {
-        public Texture2D Texture;
-        public Color DrawColor;
+        public Texture2D Texture { get; set; }
+        public Color DrawColor { get; set;}
+        public Rectangle SourceRectangle { get; set; }
 
         public Rendering(Texture2D texture)
         {
@@ -14,7 +15,7 @@ namespace Monogame1.ECS.Components
             DrawColor = Color.White;
         }
 
-        public Rendering() 
+        public Rendering()
         {
             DrawColor = Color.White;
         }

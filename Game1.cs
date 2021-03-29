@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Monogame1.OO.Models;
+//using Monogame1.OO.Models;
 using Monogame1.ECS;
+using Monogame1.ECS.Models;
 using Monogame1.ECS.Components;
 using Monogame1.ECS.Systems;
 using Microsoft.Xna.Framework;
@@ -65,8 +66,6 @@ namespace Monogame1
             entity.AddComponent(new Transform(new Vector2(100, 100)));
             entity.AddComponent(new Rendering());
             entity.AddComponent(new Physics());
-            // entity.AddComponent(new Monogame1.ECS.Components.AnimatedSprite());
-            // entity.AddComponent(new ECS.Components.Animation("SkeletonIdle", Content.Load<Texture2D>("Content/Monsters_Creatures_Fantasy/Skeleton/Idle"), 4));
             entity.AddComponent(new Player()
             {
                 Input = new Input()
@@ -78,6 +77,12 @@ namespace Monogame1
                     Attack = Keys.Space
                 }
             });
+            entity.AddComponent(new AnimatedSprite(new List<Animation>()
+            {
+                new Animation("SkeletonIdle", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Idle"), 4),
+                new Animation("SkeletonWalk", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Walk"), 4),
+                new Animation("SkeletonAttack", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Attack"), 8)
+            }));
         }
 
         protected override void Draw(GameTime gameTime)

@@ -1,4 +1,4 @@
-using Monogame1.OO.Models;
+using Monogame1.ECS.Models;
 
 namespace Monogame1.ECS.Components
 {

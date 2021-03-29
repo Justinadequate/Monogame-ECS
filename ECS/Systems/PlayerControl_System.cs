@@ -23,7 +23,9 @@ namespace Monogame1.ECS.Systems
         {
             foreach (var item in _components)
             {
-                Move(item);
+                if (item.Key.PlayerState == State.Walking)
+                    Move(item);
+
                 SetState(item.Key);
                 Debug.WriteLine(item.Key.PlayerState);
             }
@@ -52,6 +54,7 @@ namespace Monogame1.ECS.Systems
                 player.PlayerState = State.Attacking;
             else if (!(player.PlayerState == State.Walking || player.PlayerState == State.Attacking))
                 player.PlayerState = State.Idle;
+            // TODO: make animations play right
 
             bool MovementKeyDown()
             {

@@ -5,13 +5,15 @@ namespace Monogame1.ECS.Models
 {
     public class Animation
     {
-        public Animation(Texture2D texture, int frameCount)
+        public Animation(string name, Texture2D texture, int frameCount)
         {
+            Name = name;
             Texture = texture;
             FrameCount = frameCount;
             FrameSpeed = 0.2f;
         }
 
+        public string Name { get; set; }
         public Texture2D Texture { get; private set; }
         public int CurrentFrame { get; set; }
         public int FrameCount { get; set; }

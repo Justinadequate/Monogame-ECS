@@ -1,16 +1,19 @@
 using System.Collections.Generic;
+using System.Linq;
 using Monogame1.ECS.Models;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Monogame1.ECS.Components
 {
-    public class AnimatedSprite : Sprite
+    public class AnimatedSprite : Component
     {
-        public Dictionary<string, Animation> Animations { get; set; } // TODO: how give and use animations
+        string Name { get; set; }
+        public List<Animation> Animations { get; set; }
+        public Animation CurrentAnimation { get; set; }
 
-        public AnimatedSprite(string name, Texture2D texture) : base(texture)
+        public AnimatedSprite(List<Animation> animations)
         {
-            Texture = texture;
+            Animations = animations;
+            CurrentAnimation = animations.FirstOrDefault();
         }
     }
 }

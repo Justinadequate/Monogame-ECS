@@ -20,7 +20,7 @@ namespace Monogame1.ECS.Systems
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in _components)
-                spriteBatch.Draw(item.Key.Texture, item.Value.Position, item.Key.DrawColor);
+                spriteBatch.Draw(item.Key.Texture, item.Value.Position, item.Key.SourceRectangle, item.Key.DrawColor);
 
             HandleRemove();
         }
