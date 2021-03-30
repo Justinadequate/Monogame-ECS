@@ -56,15 +56,21 @@ namespace Monogame1.ECS.Systems
         {
             if (item.Anim.CurrentAnimation == animation)
             {
+                if (item.Anim.CurrentAnimation.IsComplete && !item.Anim.CurrentAnimation.ShouldLoop)
+                {
+                    item.Player.PlayerState = State.Idle;
+                    item.Anim.CurrentAnimation.IsComplete = false;
+                }
+
                 if (item.Anim.CurrentAnimation.CurrentFrame < item.Anim.CurrentAnimation.FrameCount - 1)
                     return;
                 else
-                    item.Anim.CurrentAnimation.IsComplete = true; 
+                    item.Anim.CurrentAnimation.IsComplete = true;
                 return;
             }
 
-            item.Anim.CurrentAnimation.IsComplete = false;
             item.Anim.CurrentAnimation = animation;
+            item.Anim.CurrentAnimation.IsComplete = false;
             item.Anim.CurrentAnimation.CurrentFrame = 0;
             _timer = 0;
         }

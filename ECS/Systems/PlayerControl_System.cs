@@ -52,7 +52,7 @@ namespace Monogame1.ECS.Systems
                 player.PlayerState = State.Walking;
             else if (player.PlayerState == State.Attacking || Keyboard.GetState().IsKeyDown(player.Input.Attack))
                 player.PlayerState = State.Attacking;
-            else if (!(player.PlayerState == State.Walking || player.PlayerState == State.Attacking))
+            else if (!MovementKeyDown())
                 player.PlayerState = State.Idle;
             // TODO: make animations play right
 
