@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using Monogame1.ECS.Components;
@@ -27,7 +26,6 @@ namespace Monogame1.ECS.Systems
                     Move(item);
 
                 SetState(item.Key);
-                Debug.WriteLine(item.Key.PlayerState);
             }
 
             HandleRemove();
@@ -54,7 +52,6 @@ namespace Monogame1.ECS.Systems
                 player.PlayerState = State.Attacking;
             else if (!MovementKeyDown())
                 player.PlayerState = State.Idle;
-            // TODO: make animations play right
 
             bool MovementKeyDown()
             {

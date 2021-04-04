@@ -13,6 +13,7 @@ namespace Monogame1.ECS.Components
         {
             Texture = texture;
             DrawColor = Color.White;
+            SourceRectangle = Texture.Bounds;
         }
 
         public Rendering()

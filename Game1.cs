@@ -60,13 +60,12 @@ namespace Monogame1
             _physicsSystem = new Physics_System();
             _playerSystem = new PlayerControl_System();
             _animationSystem = new Animation_System();
-            // TODO: find out how to manage animations etc in ECS
 
-            Entity entity = new Entity("First");
-            entity.AddComponent(new Transform(new Vector2(100, 100)));
-            entity.AddComponent(new Rendering());
-            entity.AddComponent(new Physics());
-            entity.AddComponent(new Player()
+            Entity skeleton1 = new Entity("Skeleton1");
+            skeleton1.AddComponent(new Transform(new Vector2(100, 100)));
+            skeleton1.AddComponent(new Rendering());
+            skeleton1.AddComponent(new Physics());
+            skeleton1.AddComponent(new Player()
             {
                 Input = new Input()
                 {
@@ -77,12 +76,16 @@ namespace Monogame1
                     Attack = Keys.Space
                 }
             });
-            entity.AddComponent(new AnimatedSprite(new List<Animation>()
+            skeleton1.AddComponent(new AnimatedSprite(new List<Animation>()
             {
                 new Animation("SkeletonIdle", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Idle"), 4, true),
                 new Animation("SkeletonWalk", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Walk"), 4, true),
                 new Animation("SkeletonAttack", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Attack"), 8, false)
             }));
+
+            Entity floor1 = new Entity("Floor1");
+            floor1.AddComponent(new Transform(new Vector2(150, 200)));
+            floor1.AddComponent(new Rendering(Content.Load<Texture2D>("FloorA/spr_PisoA_strip18")));
         }
 
         protected override void Draw(GameTime gameTime)
