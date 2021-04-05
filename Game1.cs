@@ -84,7 +84,7 @@ namespace Monogame1
             }));
 
             Entity floor1 = new Entity("Floor1");
-            floor1.AddComponent(new Transform(new Vector2(150, 200)));
+            floor1.AddComponent(new Transform(new Vector2(0, (_graphics.GraphicsDevice.Viewport.Height / 3) * 2)));
             floor1.AddComponent(new Rendering(Content.Load<Texture2D>("FloorA/spr_PisoA_strip18")));
         }
 
