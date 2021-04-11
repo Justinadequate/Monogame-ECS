@@ -10,7 +10,6 @@ namespace Monogame1.ECS.Systems
     {
         private List<(AnimatedSprite Anim, Player Player, Rendering Rend)> _components = new List<(AnimatedSprite, Player, Rendering)>();
         private List<AnimatedSprite> _toRemove = new List<AnimatedSprite>();
-        private float _timer;
 
         public Animation_System()
         {
@@ -21,13 +20,14 @@ namespace Monogame1.ECS.Systems
 
         public void Update(GameTime gameTime)
         {
-            _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             foreach (var item in _components)
             {
-                if (_timer > item.Anim.CurrentAnimation.FrameSpeed)
+                item.Anim.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (item.Anim.Timer > item.Anim.CurrentAnimation.FrameSpeed)
                 {
-                    _timer = 0f;
+                    item.Anim.Timer = 0f;
                     item.Anim.CurrentAnimation.CurrentFrame++;
 
                     if(item.Anim.CurrentAnimation.CurrentFrame >= item.Anim .CurrentAnimation.FrameCount)
@@ -72,7 +72,7 @@ namespace Monogame1.ECS.Systems
             item.Anim.CurrentAnimation = animation;
             item.Anim.CurrentAnimation.IsComplete = false;
             item.Anim.CurrentAnimation.CurrentFrame = 0;
-            _timer = 0;
+            item.Anim.Timer = 0;
         }
 
         private void HandleRemove()

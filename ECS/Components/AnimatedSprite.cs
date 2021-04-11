@@ -9,6 +9,7 @@ namespace Monogame1.ECS.Components
         string Name { get; set; }
         public List<Animation> Animations { get; set; }
         public Animation CurrentAnimation { get; set; }
+        public float Timer { get; set; }
 
         public AnimatedSprite(List<Animation> animations)
         {
