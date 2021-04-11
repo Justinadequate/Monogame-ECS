@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 //using Monogame1.OO.Models;
 using Monogame1.ECS;
-using Monogame1.ECS.Models;
 using Monogame1.ECS.Components;
+using Monogame1.ECS.Factories;
+using Monogame1.ECS.Models;
 using Monogame1.ECS.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -61,31 +63,11 @@ namespace Monogame1
             _playerSystem = new PlayerControl_System();
             _animationSystem = new Animation_System();
 
-            Entity skeleton1 = new Entity("Skeleton1");
-            skeleton1.AddComponent(new Transform(new Vector2(100, 100)));
-            skeleton1.AddComponent(new Rendering());
-            skeleton1.AddComponent(new Physics());
-            skeleton1.AddComponent(new Player()
-            {
-                Input = new Input()
-                {
-                    Up = Keys.W,
-                    Down = Keys.S,
-                    Left = Keys.A,
-                    Right = Keys.D,
-                    Attack = Keys.Space
-                }
-            });
-            skeleton1.AddComponent(new AnimatedSprite(new List<Animation>()
-            {
-                new Animation("SkeletonIdle", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Idle"), 4, true),
-                new Animation("SkeletonWalk", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Walk"), 4, true),
-                new Animation("SkeletonAttack", Content.Load<Texture2D>("Monsters_Creatures_Fantasy/Skeleton/Attack"), 8, false)
-            }));
+            SkeletonFactory.CreateSkeleton(Content, 2);
 
-            Entity floor1 = new Entity("Floor1");
-            floor1.AddComponent(new Transform(new Vector2(0, (_graphics.GraphicsDevice.Viewport.Height / 3) * 2)));
-            floor1.AddComponent(new Rendering(Content.Load<Texture2D>("FloorA/spr_PisoA_strip18")));
+            // Entity floor1 = new Entity("Floor1");
+            // floor1.AddComponent(new Transform(new Vector2(0, (_graphics.GraphicsDevice.Viewport.Height / 3) * 2)));
+            // floor1.AddComponent(new Rendering(Content.Load<Texture2D>("FloorA/spr_PisoA_strip18")));
         }
 
         protected override void Draw(GameTime gameTime)
@@ -112,6 +94,9 @@ namespace Monogame1
             _animationSystem.Update(gameTime);
             _playerSystem.Update();
             _physicsSystem.Update();
+
+            foreach(var item in EntityManager.Instance._entities)
+                Debug.WriteLine($"{item.EntityName} - {item.GetComponent<Player>().PlayerState}");
 
             base.Update(gameTime);
         }

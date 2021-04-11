@@ -5,7 +5,7 @@ namespace Monogame1.ECS
 {
     public class EntityManager
     {
-        private List<Entity> _entities = new List<Entity>();
+        public List<Entity> _entities = new List<Entity>();
         public static EntityManager Instance;
         public event Action<Entity, Component> OnComponentAdded;
         public event Action<Entity, Component> OnComponentRemoved;
