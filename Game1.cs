@@ -21,6 +21,7 @@ namespace Monogame1
         private Animation_System _animationSystem;
         private PlayerControl_System _playerSystem;
         private Physics_System _physicsSystem;
+        private Raycast_System _raycastSystem;
 
         public Game1()
         {
@@ -31,6 +32,9 @@ namespace Monogame1
 
         protected override void Initialize()
         {
+            _graphics.PreferredBackBufferHeight = 25*25;
+            _graphics.PreferredBackBufferWidth = 25*25;
+            _graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -62,8 +66,16 @@ namespace Monogame1
             _physicsSystem = new Physics_System();
             _playerSystem = new PlayerControl_System();
             _animationSystem = new Animation_System();
+            _raycastSystem = new Raycast_System();
 
-            SkeletonFactory.CreateSkeleton(Content, 2);
+            Entity map = new Entity("map");
+            map.AddComponent(new Map());
+            Entity camera = new Entity("camera");
+            camera.AddComponent(new Camera(new Vector2(100, 100)));
+
+            _raycastSystem.LoadContent(Content);
+
+            // SkeletonFactory.CreateSkeleton(Content, 2);
 
             // Entity floor1 = new Entity("Floor1");
             // floor1.AddComponent(new Transform(new Vector2(0, (_graphics.GraphicsDevice.Viewport.Height / 3) * 2)));
@@ -72,12 +84,14 @@ namespace Monogame1
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Transparent);
 
             _spriteBatch.Begin();
             // foreach (var sprite in _sprites)
             //     sprite.Draw(_spriteBatch);
             _drawSystem.Draw(_spriteBatch);
+            _raycastSystem.Draw(_spriteBatch, _graphics.GraphicsDevice);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
@@ -94,9 +108,7 @@ namespace Monogame1
             _animationSystem.Update(gameTime);
             _playerSystem.Update();
             _physicsSystem.Update();
-
-            foreach(var item in EntityManager.Instance._entities)
-                Debug.WriteLine($"{item.EntityName} - {item.GetComponent<Player>().PlayerState}");
+            _raycastSystem.Update();
 
             base.Update(gameTime);
         }

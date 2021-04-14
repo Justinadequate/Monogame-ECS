@@ -35,13 +35,13 @@ namespace Monogame1.ECS.Systems
         private void Move(KeyValuePair<Player, Physics> item)
         {
             if (Keyboard.GetState().IsKeyDown(item.Key.Input.Up))
-                item.Value.Velocity.Y = -1;
+                item.Value.Velocity.Y = -item.Value.Speed;
             if (Keyboard.GetState().IsKeyDown(item.Key.Input.Down))
-                item.Value.Velocity.Y = 1;
+                item.Value.Velocity.Y = item.Value.Speed;
             if (Keyboard.GetState().IsKeyDown(item.Key.Input.Left))
-                item.Value.Velocity.X = -1;
+                item.Value.Velocity.X = -item.Value.Speed;
             if (Keyboard.GetState().IsKeyDown(item.Key.Input.Right))
-                item.Value.Velocity.X = 1;
+                item.Value.Velocity.X = item.Value.Speed;
         }
 
         private void SetState(Player player)
