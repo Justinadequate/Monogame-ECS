@@ -71,6 +71,11 @@ namespace Monogame1
             _animationSystem = new Animation_System();
             _raycastSystem = new Raycast_System();
 
+            Entity camera = new Entity("camera");
+            camera.AddComponent(new Transform(new Vector2(100, 100)));
+            camera.AddComponent(new Rendering(Content.Load<Texture2D>("triangle")) {Width = 15, Height = 15, Layer = 1});
+            camera.AddComponent(new Camera());
+
             // SkeletonFactory.CreateSkeleton(Content, 2);
 
             // Entity floor1 = new Entity("Floor1");
@@ -93,10 +98,10 @@ namespace Monogame1
                         tile.AddComponent(new Transform(pos));
                         tile.AddComponent(new Rendering(texture1px)
                         {
-                            //Destination = new Rectangle((int)pos.X, (int)pos.Y, tileSize, tileSize),
                             Width = tileSize,
                             Height = tileSize,
-                            DrawColor = Color.Black
+                            DrawColor = Color.Black,
+                            Layer = 0
                         });
                     }
                     else if (_map[x,y] == 0)
@@ -105,10 +110,10 @@ namespace Monogame1
                         tile.AddComponent(new Transform(pos));
                         tile.AddComponent(new Rendering(texture1px)
                         {
-                            //Destination = new Rectangle((int)pos.X, (int)pos.Y, tileSize, tileSize),
                             Width = tileSize,
                             Height = tileSize,
-                            DrawColor = Color.White
+                            DrawColor = Color.White,
+                            Layer = 0
                         });
                     }
                     pos.X += tileSize;
@@ -129,11 +134,6 @@ namespace Monogame1
             //     _spriteBatch.Draw(texture1px, new Rectangle(0, (int)pos.Y, tileSize*_map.GetLength(1), 1), Color.Red);
             //     pos.Y += tileSize;
             // }
-
-            Entity camera = new Entity("camera");
-            camera.AddComponent(new Transform(new Vector2(100, 100)));
-            camera.AddComponent(new Rendering(Content.Load<Texture2D>("triangle")) {Width = 15, Height = 15});
-            camera.AddComponent(new Camera());
             #endregion
         }
 

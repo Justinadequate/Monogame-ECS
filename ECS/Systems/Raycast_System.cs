@@ -12,9 +12,7 @@ namespace Monogame1.ECS.Systems
     public class Raycast_System
     {
         private Dictionary<Camera, Transform> _components = new Dictionary<Camera, Transform>();
-        // private List<Map> _mapComponents = new List<Map>();
-        private List<Camera> _camerasToRemove = new List<Camera>();
-        // private List<Map> _mapsToRemove = new List<Map>();
+        private List<Camera> _toRemove = new List<Camera>();
 
         public Raycast_System()
         {
@@ -35,7 +33,7 @@ namespace Monogame1.ECS.Systems
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
-                    var dir = new Vector2((float)Math.Acos(item.Value.Rotation), (float)Math.Asin(item.Value.Rotation));
+                    var dir = new Vector2((float)Math.Cos(item.Value.Rotation), (float)Math.Sin(item.Value.Rotation));
                     dir.Normalize();
                     item.Key.Velocity -= dir * item.Key.MoveSpeed;
                 }
@@ -50,12 +48,11 @@ namespace Monogame1.ECS.Systems
         }
 
         #region privates
-
         private void HandleRemove()
         {
-            foreach (var item in _camerasToRemove)
+            foreach (var item in _toRemove)
                 _components.Remove(item);
-            _camerasToRemove.Clear();
+            _toRemove.Clear();
         }
 
         private void Instance_OnComponentAdded(Entity entity, Component component)
@@ -74,7 +71,7 @@ namespace Monogame1.ECS.Systems
             {
                 var camera = (Camera)component;
                 if (_components.ContainsKey(camera))
-                    _camerasToRemove.Add(camera);
+                    _toRemove.Add(camera);
             }
         }
         
@@ -82,7 +79,7 @@ namespace Monogame1.ECS.Systems
         {
             var component = _components.FirstOrDefault(c => c.Key.EntityId == entity.EntityId);
             if (component.Key != null)
-                _camerasToRemove.Add(component.Key);
+                _toRemove.Add(component.Key);
         }
         #endregion
     }
