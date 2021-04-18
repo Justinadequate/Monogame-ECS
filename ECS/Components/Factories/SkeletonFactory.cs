@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Monogame1.ECS;
 using Monogame1.ECS.Components;
 using Monogame1.ECS.Models;
 using Microsoft.Xna.Framework;

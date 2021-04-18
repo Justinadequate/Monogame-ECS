@@ -1,16 +1,9 @@
-using System;
-
-namespace Monogame1.ECS.Components
-{
-    public class Map : Component
+namespace Monogame1.ECS.Components{
+    public static class Map
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int[,] Grid { get; set; }
-
-        public Map()
+        public static int[,] GetMap()
         {
-            Grid = new int[,]
+            return new int[,]
             {
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -38,8 +31,6 @@ namespace Monogame1.ECS.Components
                 {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             };
-            Height = Grid.GetLength(0);
-            Width = Grid.GetLength(1);
         }
     }
 }

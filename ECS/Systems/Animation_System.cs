@@ -18,12 +18,12 @@ namespace Monogame1.ECS.Systems
             EntityManager.Instance.OnEntityRemoved += Instance_OnEntityRemoved;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(float gameTime)
         {
 
             foreach (var item in _components)
             {
-                item.Anim.Timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                item.Anim.Timer += gameTime;
 
                 if (item.Anim.Timer > item.Anim.CurrentAnimation.FrameSpeed)
                 {
@@ -36,7 +36,7 @@ namespace Monogame1.ECS.Systems
 
                 SetAnimation(item);
                 item.Rend.Texture = item.Anim.CurrentAnimation.Texture;
-                item.Rend.SourceRectangle = new Rectangle(
+                item.Rend.Source = new Rectangle(
                     item.Anim.CurrentAnimation.CurrentFrame * item.Anim.CurrentAnimation.FrameWidth,
                     0,
                     item.Anim.CurrentAnimation.FrameWidth,

@@ -6,18 +6,16 @@ namespace Monogame1.ECS.Components
 {
     public class Camera : Component
     {
-        public Texture2D Texture { get; set; }
-        public Vector2 Position { get; set; }
-        public float Rotation { get; set; }
+        public Vector2 Direction { get; set; }
+        public Vector2 Velocity { get; set; }
         public float MoveSpeed { get; set; }
         public float TurnSpeed { get; set; }
 
-        public Camera(Vector2 position)
+        public Camera()
         {
-            Position = position;
-            Rotation = 0f;
-            MoveSpeed = 1f;
-            TurnSpeed = 0.05f;
+            Direction = new Vector2(0, 1);
+            MoveSpeed = 100f;
+            TurnSpeed = 5f;
         }
     }
 }
