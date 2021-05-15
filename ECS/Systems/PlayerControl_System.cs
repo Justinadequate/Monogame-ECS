@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using Monogame1.ECS.Components;
-using Monogame1.OO.Models;
+using Monogame1.ECS.Models;
 
 namespace Monogame1.ECS.Systems
 {

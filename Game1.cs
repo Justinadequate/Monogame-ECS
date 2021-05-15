@@ -16,7 +16,6 @@ namespace Monogame1
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        // private List<AnimatedSprite> _sprites;
         private int[,] _map;
         private Drawing_System _drawSystem;
         private Animation_System _animationSystem;
@@ -45,25 +44,7 @@ namespace Monogame1
 
             _map = Map.GetMap();
 
-            // _sprites = new List<AnimatedSprite>()                // OO approach
-            // {
-            //     new Character(new Vector2(100, 100), "Skeleton")
-            //     {
-            //         Input = new Input()
-            //         {
-            //             Up = Keys.W,
-            //             Down = Keys.S,
-            //             Left = Keys.A,
-            //             Right = Keys.D,
-            //             Attack = Keys.Space
-            //         }
-            //     }
-            // };
-            
-            // foreach (var sprite in _sprites)
-            //     sprite.LoadContent(Content);
-
-            new EntityManager();                                    // ECS approach
+            new EntityManager();
             
             _drawSystem = new Drawing_System();
             _physicsSystem = new Physics_System();
@@ -142,8 +123,6 @@ namespace Monogame1
             GraphicsDevice.Clear(Color.Transparent);
 
             _spriteBatch.Begin();
-            // foreach (var sprite in _sprites)
-            //     sprite.Draw(_spriteBatch);
             _drawSystem.Draw(_spriteBatch);
             _spriteBatch.End();
 
@@ -155,9 +134,6 @@ namespace Monogame1
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             float deltaTime = ((float)gameTime.ElapsedGameTime.Milliseconds) / 1000f;
-
-            // foreach (var sprite in _sprites)
-            //     sprite.Update(gameTime);
 
             _animationSystem.Update(deltaTime);
             _playerSystem.Update();
