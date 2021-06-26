@@ -20,7 +20,6 @@ namespace Monogame1.ECS.Systems
 
         public void Update(float gameTime)
         {
-
             foreach (var item in _components)
             {
                 item.Anim.Timer += gameTime;

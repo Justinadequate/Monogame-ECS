@@ -21,16 +21,7 @@ namespace Monogame1.ECS.Systems
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in _components.OrderBy(c => c.Key.Layer))
-                spriteBatch.Draw(
-                    item.Key.Texture,
-                    new Rectangle((int)item.Value.Position.X, (int)item.Value.Position.Y, item.Key.Width, item.Key.Height),
-                    item.Key.Source,
-                    item.Key.DrawColor,
-                    item.Value.Rotation,
-                    new Vector2(item.Key.Texture.Width/2, item.Key.Texture.Height/2),
-                    SpriteEffects.None,
-                    item.Key.Layer
-            );
+                spriteBatch.Draw(item.Key.Texture, item.Value.Position, item.Key.Source, item.Key.DrawColor);
 
             HandleRemove();
         }
