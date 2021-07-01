@@ -7,6 +7,7 @@ namespace Monogame1.ECS.Components
         public Vector2 Position;
         public Vector2 Scale;
         public float Rotation;
+        public Rectangle Destination;
 
         public Transform(Vector2 position)
         {

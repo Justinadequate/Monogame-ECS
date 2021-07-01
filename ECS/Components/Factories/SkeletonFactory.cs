@@ -18,6 +18,7 @@ namespace Monogame1.ECS.Factories
                 newSkeleton.AddComponent(new Transform(new Vector2(100 + (i*50), 100 + (i*50))));
                 newSkeleton.AddComponent(new Rendering());
                 newSkeleton.AddComponent(new Physics());
+                newSkeleton.AddComponent(new Collider());
                 newSkeleton.AddComponent(new Player()
                 {
                     Input = new Input()

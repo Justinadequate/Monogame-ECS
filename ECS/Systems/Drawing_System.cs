@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -21,7 +22,27 @@ namespace Monogame1.ECS.Systems
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var item in _components.OrderBy(c => c.Key.Layer))
-                spriteBatch.Draw(item.Key.Texture, item.Value.Position, item.Key.Source, item.Key.DrawColor);
+            {
+                item.Value.Destination = new Rectangle(
+                    (int)item.Value.Position.X,
+                    (int)item.Value.Position.Y,
+                    (int)Math.Floor(item.Key.Source.Width * item.Value.Scale.X),
+                    (int)Math.Floor(item.Key.Source.Height * item.Value.Scale.Y)
+                );
+                spriteBatch.Draw(
+                    texture: item.Key.Texture,
+                    destinationRectangle: item.Value.Destination,
+                    sourceRectangle: item.Key.Source,
+                    color: item.Key.DrawColor,
+                    rotation: item.Value.Rotation,
+                    origin: new Vector2(
+                        item.Value.Destination.Width/2,
+                        item.Value.Destination.Height/2
+                    ),
+                    effects: SpriteEffects.None,
+                    layerDepth: item.Key.Layer
+                );
+            }
 
             HandleRemove();
         }

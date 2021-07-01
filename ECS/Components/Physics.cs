@@ -6,7 +6,9 @@ namespace Monogame1.ECS.Components
     {
         public Vector2 Velocity;
         public float Speed = 1f;
-        public float Friction;
+        public float Friction = 1f;
+        public float Gravity = 1f;
+        public bool Collision;
         public bool IsStatic = false;
     }
 }

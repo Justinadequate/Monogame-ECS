@@ -8,8 +8,8 @@ namespace Monogame1.ECS.Components
         public Texture2D Texture { get; set; }
         public Color DrawColor { get; set;}
         public Rectangle Source { get; set; }
-        public int Height { get { return Source.Height; } set { Height = value; } }
-        public int Width { get { return Source.Width; } set { Width = value; } }
+        public int Height { get; set; }
+        public int Width { get; set; }
         public float Layer { get; set; }
 
         public Rendering(Texture2D texture)
