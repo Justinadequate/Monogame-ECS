@@ -37,7 +37,7 @@ namespace Monogame1
 
         protected override void LoadContent()
         {
-            _tiledMap = Content.Load<TiledMap>("test1");
+            _tiledMap = Content.Load<TiledMap>("Maps/test1");
             _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             new EntityManager();
@@ -48,11 +48,6 @@ namespace Monogame1
             _animationSystem = new Animation_System();
 
             SkeletonFactory.CreateSkeleton(Content, 1);
-
-            // Entity floor1 = new Entity("Floor1");
-            // floor1.AddComponent(new Transform(new Vector2(0, (_graphics.GraphicsDevice.Viewport.Height / 3) * 2)));
-            // floor1.AddComponent(new Rendering(Content.Load<Texture2D>("FloorA/spr_PisoA_strip18")));
-            // floor1.AddComponent(new Collider());
         }
 
         protected override void Draw(GameTime gameTime)

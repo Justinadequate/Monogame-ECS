@@ -10,8 +10,8 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\bin\Debug\netcoreapp3.1\MonoGame.Extended.dll
-/reference:..\bin\Debug\netcoreapp3.1\MonoGame.Extended.Tiled.dll
+# /reference:..\bin\Debug\netcoreapp3.1\MonoGame.Extended.dll
+# /reference:..\bin\Debug\netcoreapp3.1\MonoGame.Extended.Tiled.dll
 /reference:..\bin\Debug\netcoreapp3.1\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
@@ -388,8 +388,24 @@
 /processorParam:TextureFormat=Color
 /build:Monsters_Creatures_Fantasy/Skeleton/Walk.png
 
-#begin test1.tmx
+#begin Maps/test1.tmx
 /importer:
 /processor:
-/build:test1.tmx
+/build:Maps/test1.tmx
 
+#begin TileSets/Metroid_ZeroMission_Brinstar.tsx
+/importer:
+/processor:
+/build:TileSets/Metroid_ZeroMission_Brinstar.tsx
+
+#begin TileSets/Metroid_ZeroMission_Brinstar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TileSets/Metroid_ZeroMission_Brinstar.png
