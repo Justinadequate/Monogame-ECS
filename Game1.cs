@@ -13,7 +13,6 @@ namespace Monogame1
 {
     public class Game1 : Game
     {
-        // TODO: cannot import tiled map and pipeline dll not in build folder !!!!
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Drawing_System _drawSystem;
