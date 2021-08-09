@@ -9,7 +9,7 @@ namespace Monogame1.ECS.Models
         private Texture2D _texture;
         private int _rows;
         private int _columns;
-        private Rectangle[][] _frames;
+        // private Rectangle[][] _frames;
         private int _frameWidth;
         private int _frameHeight;
 

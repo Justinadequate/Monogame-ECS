@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Input;
 using Monogame1.ECS.Components;
 using Monogame1.ECS.Models;
+using MonoGame.Extended;
 
 namespace Monogame1.ECS.Systems
 {
@@ -10,9 +11,11 @@ namespace Monogame1.ECS.Systems
     {
         private Dictionary<Player, Physics> _components = new Dictionary<Player, Physics>();
         private List<Player> _toRemove = new List<Player>();
+        private OrthographicCamera _camera;
 
-        public PlayerControl_System()
+        public PlayerControl_System(OrthographicCamera camera)
         {
+            _camera = camera;
             EntityManager.Instance.OnComponentAdded += Instance_OnComponentAdded;
             EntityManager.Instance.OnComponentRemoved += Instance_OnComponentRemoved;
             EntityManager.Instance.OnEntityRemoved += Instance_OnEntityRemoved;
@@ -26,12 +29,15 @@ namespace Monogame1.ECS.Systems
                     Move(item);
 
                 SetState(item.Key);
+
+                var playerEntity = EntityManager.Instance._entities.FirstOrDefault(e => e.EntityId == item.Value.EntityId);
+                if (playerEntity != null)
+                    _camera.LookAt(playerEntity.GetComponent<Transform>().Position);
             }
 
             HandleRemove();
         }
 
-        #region privates
         private void Move(KeyValuePair<Player, Physics> item)
         {
             if (Keyboard.GetState().IsKeyDown(item.Key.Input.Up))
@@ -62,6 +68,7 @@ namespace Monogame1.ECS.Systems
             }
         }
 
+        #region System Methods
         private void HandleRemove()
         {
             foreach (var item in _toRemove)

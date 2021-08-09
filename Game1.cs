@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Monogame1.ECS;
+using Monogame1.ECS.Components;
 using Monogame1.ECS.Factories;
+using Monogame1.ECS.Models;
 using Monogame1.ECS.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
+using MonoGame.Extended.ViewportAdapters;
 
 namespace Monogame1
 {
@@ -17,10 +21,11 @@ namespace Monogame1
         private SpriteBatch _spriteBatch;
         private Drawing_System _drawSystem;
         private Animation_System _animationSystem;
-        private PlayerControl_System _playerSystem;
+        private PlayerControl_System _playerControlSystem;
         private Physics_System _physicsSystem;
         private TiledMap _tiledMap;
         private TiledMapRenderer _tiledMapRenderer;
+        private OrthographicCamera _camera;
 
         public Game1()
         {
@@ -31,6 +36,8 @@ namespace Monogame1
 
         protected override void Initialize()
         {
+            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 600);
+            _camera = new OrthographicCamera(viewportadapter);
             base.Initialize();
         }
 
@@ -43,7 +50,7 @@ namespace Monogame1
             
             _drawSystem = new Drawing_System();
             _physicsSystem = new Physics_System();
-            _playerSystem = new PlayerControl_System();
+            _playerControlSystem = new PlayerControl_System(_camera);
             _animationSystem = new Animation_System();
 
             SkeletonFactory.CreateSkeleton(Content, 1);
@@ -53,8 +60,12 @@ namespace Monogame1
         {
             GraphicsDevice.Clear(Color.Transparent);
 
-            _spriteBatch.Begin();
-            _tiledMapRenderer.Draw();
+            // TODO: using pointclamp to get rid of screen tearing, but makes sprites look worse
+            //       pad each tile in the tilesheet with 1px of the same color around it
+            _spriteBatch.Begin(
+                transformMatrix: _camera.GetViewMatrix(),
+                samplerState: SamplerState.PointClamp);
+            _tiledMapRenderer.Draw(_camera.GetViewMatrix());
             _drawSystem.Draw(_spriteBatch);
             _spriteBatch.End();
 
@@ -69,7 +80,7 @@ namespace Monogame1
 
             _tiledMapRenderer.Update(gameTime);
             _animationSystem.Update(deltaTime);
-            _playerSystem.Update();
+            _playerControlSystem.Update();
             _physicsSystem.Update();
 
             base.Update(gameTime);
