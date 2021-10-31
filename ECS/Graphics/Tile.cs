@@ -7,9 +7,9 @@ namespace Monogame1.ECS.Components
     public class Tile : Component
     {
         public Texture2D Texture { get; set; }
-        public bool Tangible { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public bool HasCollision { get; set; }
 
         public Tile(GraphicsDevice graphics, int width, int height)
         {
