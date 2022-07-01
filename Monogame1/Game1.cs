@@ -23,8 +23,8 @@ namespace Monogame1
         private Animation_System _animationSystem;
         private PlayerControl_System _playerControlSystem;
         private Physics_System _physicsSystem;
-        // private TiledMap _tiledMap;
-        // private TiledMapRenderer _tiledMapRenderer;
+        private TiledMap _tiledMap;
+        private TiledMapRenderer _tiledMapRenderer;
         private OrthographicCamera _camera;
 
         public Game1()
@@ -43,8 +43,8 @@ namespace Monogame1
 
         protected override void LoadContent()
         {
-            // _tiledMap = Content.Load<TiledMap>("Maps/test1");
-            // _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
+            _tiledMap = Content.Load<TiledMap>("Maps/test1");
+            _tiledMapRenderer = new TiledMapRenderer(GraphicsDevice, _tiledMap);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             new EntityManager();
             
@@ -66,7 +66,7 @@ namespace Monogame1
                 transformMatrix: _camera.GetViewMatrix(),
                 samplerState: SamplerState.PointClamp
             );
-            // _tiledMapRenderer.Draw(_camera.GetViewMatrix());
+            _tiledMapRenderer.Draw(_camera.GetViewMatrix());
             _drawSystem.Draw(_spriteBatch);
             _spriteBatch.End();
 
@@ -79,7 +79,7 @@ namespace Monogame1
                 Exit();
             float deltaTime = ((float)gameTime.ElapsedGameTime.Milliseconds) / 1000f;
 
-            // _tiledMapRenderer.Update(gameTime);
+            _tiledMapRenderer.Update(gameTime);
             _animationSystem.Update(deltaTime);
             _playerControlSystem.Update();
             _physicsSystem.Update();
