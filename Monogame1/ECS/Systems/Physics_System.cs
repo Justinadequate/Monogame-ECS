@@ -23,7 +23,7 @@ namespace Monogame1.ECS.Systems
             foreach (var item in _components)
             {
                 item.Value.Position += item.Key.Velocity;
-                item.Key.Velocity = Vector2.Zero;
+                // item.Key.Velocity = Vector2.Zero;
             }
         }
 

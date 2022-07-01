@@ -25,9 +25,7 @@ namespace Monogame1.ECS.Systems
         {
             foreach (var item in _components)
             {
-                if (item.Key.PlayerState == State.Walking)
-                    Move(item);
-
+                Move(item.Key, item.Value);
                 SetState(item.Key);
 
                 var playerEntity = EntityManager.Instance._entities.FirstOrDefault(e => e.EntityId == item.Value.EntityId);
@@ -38,16 +36,38 @@ namespace Monogame1.ECS.Systems
             HandleRemove();
         }
 
-        private void Move(KeyValuePair<Player, Physics> item)
+        private void Move(Player playerControl, Physics playerPhysics)
         {
-            if (Keyboard.GetState().IsKeyDown(item.Key.Input.Up))
-                item.Value.Velocity.Y = -item.Value.Speed;
-            if (Keyboard.GetState().IsKeyDown(item.Key.Input.Down))
-                item.Value.Velocity.Y = item.Value.Speed;
-            if (Keyboard.GetState().IsKeyDown(item.Key.Input.Left))
-                item.Value.Velocity.X = -item.Value.Speed;
-            if (Keyboard.GetState().IsKeyDown(item.Key.Input.Right))
-                item.Value.Velocity.X = item.Value.Speed;
+            var keyboard = Keyboard.GetState();
+
+            //* Go
+            if (keyboard.IsKeyDown(playerControl.Input.Up))
+                playerPhysics.Velocity.Y = playerPhysics.Velocity.Y <= -playerPhysics.MaxSpeed ?
+                    -playerPhysics.MaxSpeed : playerPhysics.Velocity.Y - playerPhysics.Acceleration;
+            if (keyboard.IsKeyDown(playerControl.Input.Down))
+                playerPhysics.Velocity.Y = playerPhysics.Velocity.Y >= playerPhysics.MaxSpeed ?
+                    playerPhysics.MaxSpeed : playerPhysics.Velocity.Y + playerPhysics.Acceleration;
+            if (keyboard.IsKeyDown(playerControl.Input.Left))
+                playerPhysics.Velocity.X = playerPhysics.Velocity.X <= -playerPhysics.MaxSpeed ?
+                    -playerPhysics.MaxSpeed : playerPhysics.Velocity.X - playerPhysics.Acceleration;
+            if (keyboard.IsKeyDown(playerControl.Input.Right))
+                playerPhysics.Velocity.X = playerPhysics.Velocity.X >= playerPhysics.MaxSpeed ?
+                    playerPhysics.MaxSpeed : playerPhysics.Velocity.X + playerPhysics.Acceleration;
+
+            //* Stop
+            if (keyboard.IsKeyUp(playerControl.Input.Up) && keyboard.IsKeyUp(playerControl.Input.Down))
+                playerPhysics.Velocity.Y = playerPhysics.Velocity.Y == 0 ? 0 
+                    : playerPhysics.Velocity.Y > 0 ? playerPhysics.Velocity.Y - playerPhysics.Acceleration
+                        : playerPhysics.Velocity.Y + playerPhysics.Acceleration;
+            if (keyboard.IsKeyUp(playerControl.Input.Left) && keyboard.IsKeyUp(playerControl.Input.Right))
+                playerPhysics.Velocity.X = playerPhysics.Velocity.X == 0 ? 0 
+                    : playerPhysics.Velocity.X > 0 ? playerPhysics.Velocity.X - playerPhysics.Acceleration
+                        : playerPhysics.Velocity.X + playerPhysics.Acceleration;
+
+            if (playerPhysics.Velocity.Y < 0.1f && playerPhysics.Velocity.Y > -0.1f)
+                playerPhysics.Velocity.Y = 0;
+            if (playerPhysics.Velocity.X < 0.1f && playerPhysics.Velocity.X > -0.1f)
+                playerPhysics.Velocity.X = 0;
         }
 
         private void SetState(Player player)
